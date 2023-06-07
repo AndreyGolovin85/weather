@@ -1,6 +1,4 @@
-# -*- coding: utf-8 -*-
-
-from time import sleep
+import json
 
 import requests
 
@@ -12,17 +10,14 @@ url = 'https://api.openweathermap.org/data/2.5/weather?q=' + city + \
 
 def weather():
     weather_data = requests.get(url).json()
+    weather_data_structure = json.dumps(weather_data, indent=2, ensure_ascii=False)
 
-    temperature = round(weather_data['main']['temp'])
-    temperature_feels = round(weather_data['main']['feels_like'])
-    wind_speed = weather_data['wind']['speed']
+    temperature = round(weather_data["main"]["temp"])
+    temperature_feels = round(weather_data["main"]["feels_like"])
+    wind_speed = weather_data["wind"]["speed"]
+    weather_description = weather_data["weather"][0]["description"]
+    air_humidity = weather_data["main"]["humidity"]
 
-    print(f'Сейчас в городе, {city}, {str(temperature)}°C')
-    print(f'Ощущается как, {str(temperature_feels)}°C')
-    print('Скорость ветра', str(wind_speed), 'м/с')
-
-    return [city + str(temperature) + " °C", "Ощущается как, " + str(temperature_feels) + " °C",
-            "Скорость ветра, " + str(wind_speed) + " м/с"]
-
-
-weather()
+    return [f"{city} {str(temperature)} °C", f"Ощущается как {str(temperature_feels)} °C",
+            f"Скорость ветра {str(wind_speed)} м/с", weather_description.capitalize(),
+            f"Влажность воздуха {air_humidity} %"]
