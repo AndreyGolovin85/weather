@@ -16,6 +16,7 @@ screen = pygame.display.set_mode((X, Y))  # flags=pygame.NOFRAME
 pygame.display.set_caption('Weather')
 font = pygame.font.SysFont('Verdana', 12)
 screen.fill(gray)
+pygame.display.flip()
 clock = pygame.time.Clock()
 start = time()
 
@@ -35,7 +36,7 @@ draw_text(main.weather())
 while True:
 
     clock.tick(FPS)
-    if time() - start > 60:
+    if time() - start > 600:
         screen.fill(gray)
         start = time()
         draw_text(main.weather())
